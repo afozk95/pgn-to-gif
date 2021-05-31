@@ -1,0 +1,12 @@
+cairocffi==1.2.0
+CairoSVG==2.5.2
+cffi==1.14.5
+chess==1.5.0
+cssselect2==0.4.1
+defusedxml==0.7.1
+imageio==2.9.0
+numpy==1.20.3
+Pillow==8.2.0
+pycparser==2.20
+tinycss2==1.1.0
+webencodings==0.5.1

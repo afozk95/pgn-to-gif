@@ -1,0 +1,1 @@
+python3 main.py --pgn-path examples/2/2.pgn --gif-path examples/2/2.gif --add-initial-position false --highlight-last-move false --orientation black --size 1000 --coordinates false --loop 1 --duration 0.4 --palettesize 16 --subrectangles false
