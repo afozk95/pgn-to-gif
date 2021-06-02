@@ -1,7 +1,7 @@
-from typing import Literal
+from typing import Literal, Optional, Sequence
 import argparse
 from pathlib import Path
-from utils import read_css, read_pgn, pgn_to_gif
+from .utils import read_css, read_pgn, pgn_to_gif
 import chess
 
 
@@ -25,7 +25,7 @@ def parse_bool(bool_str: Literal["1", "t", "true", "0", "f", "false"]) -> bool:
         raise ValueError(f"cannot parse to bool, {bool_str}")
 
 
-def main() -> None:
+def main(argv: Optional[Sequence[str]] = None) -> None:
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--pgn-path", dest="pgn_path", required=True, type=Path, help="path to pgn file to read")
     parser.add_argument("--gif-path", dest="gif_path", required=True, type=Path, help="path to gif file to save")
@@ -41,7 +41,7 @@ def main() -> None:
     parser.add_argument("--palettesize", dest="palettesize", default=64, type=int, help="number of colors to quantize images to")
     parser.add_argument("--subrectangles", dest="subrectangles", default="true", choices=["1", "t", "true", "0", "f", "false"], help="optimize gif by storing change")
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     pgn = read_pgn(args.pgn_path)
     style = None if args.css_path is None else read_css(args.css_path)

@@ -1,4 +1,3 @@
-
 from typing import Generator, Iterable, Optional, Tuple, Union
 from io import StringIO
 from pathlib import Path

@@ -1,1 +1,1 @@
-python3 main.py --pgn-path examples/1/1.pgn --gif-path examples/1/1.gif
+pgn-to-gif --pgn 1.pgn --gif 1.gif

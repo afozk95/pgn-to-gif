@@ -2,13 +2,12 @@
 Generate GIFs of chess games from PGN files.
 
 ## Installation
-`pip3 install -r requirements.txt`
+`pip3 install pgn-to-gif`
 
 ## Usage
-```console
-usage: main.py [-h] --pgn-path PGN_PATH --gif-path GIF_PATH [--add-initial-position {1,t,true,0,f,false}] [--highlight-last-move {1,t,true,0,f,false}]
-               [--orientation {white,black}] [--size SIZE] [--coordinates {1,t,true,0,f,false}] [--css-path CSS_PATH] [--loop LOOP] [--duration DURATION] [--fps FPS]
-               [--palettesize PALETTESIZE] [--subrectangles {1,t,true,0,f,false}]
+```
+usage: pgn-to-gif [-h] --pgn-path PGN_PATH --gif-path GIF_PATH [--add-initial-position {1,t,true,0,f,false}] [--highlight-last-move {1,t,true,0,f,false}] [--orientation {white,black}] [--size SIZE]
+                  [--coordinates {1,t,true,0,f,false}] [--css-path CSS_PATH] [--loop LOOP] [--duration DURATION] [--fps FPS] [--palettesize PALETTESIZE] [--subrectangles {1,t,true,0,f,false}]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -34,4 +33,4 @@ optional arguments:
 ```
 
 ## Examples
-Please see [examples](examples) folder.
+Please see [examples](https://github.com/afozk95/pgn-to-gif/tree/master/examples) folder.
