@@ -1,7 +1,7 @@
 from typing import Literal, Optional, Sequence
 import argparse
 from pathlib import Path
-from utils import read_css, read_pgn, pgn_to_gif
+from .utils import read_css, read_pgn, pgn_to_gif
 import chess
 
 
