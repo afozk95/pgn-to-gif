@@ -7,7 +7,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="pgn_to_gif",
-    version="0.0.1",
+    version="0.0.2",
     description="Generate GIFs of chess games from PGN files.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -26,7 +26,7 @@ setup(
     install_requires=[
         "cairosvg",
         "imageio",
-        "python-chess",  
+        "python-chess",
     ],
     entry_points={
         "console_scripts": [
@@ -34,6 +34,5 @@ setup(
             "pgn-to-gif=pgn_to_gif.cli:main",
         ]
     },
-    
-    keywords = ["chess", "gif", "pgn"],
+    keywords=["chess", "gif", "pgn"],
 )

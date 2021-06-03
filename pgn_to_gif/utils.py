@@ -1,5 +1,6 @@
 from typing import Generator, Iterable, Optional, Tuple, Union
 from io import StringIO
+from multiprocessing import Pool
 from pathlib import Path
 from tempfile import TemporaryFile
 import cairosvg
@@ -80,8 +81,17 @@ def board_to_svg(
     Returns:
         chess.svg.SvgWrapper: wrapped svg string
     """
-    assert isinstance(size, int) and size > 0, "size of the board must be positive integer"
-    return chess.svg.board(board, orientation=orientation, lastmove=last_move, size=size, coordinates=coordinates, style=style)
+    assert (
+        isinstance(size, int) and size > 0
+    ), "size of the board must be positive integer"
+    return chess.svg.board(
+        board,
+        orientation=orientation,
+        lastmove=last_move,
+        size=size,
+        coordinates=coordinates,
+        style=style,
+    )
 
 
 def svg_to_png(
@@ -113,7 +123,7 @@ def pngs_to_gif(
         loop (int, optional): number of gif loops, 0 = infinite. defaults to 0.
         duration (Optional[float], optional): duration of each frame in gif (in seconds). defaults to None.
         fps (Optional[float], optional): fps of gif. used only if duration is None. defaults to None.
-        palettesize (int, optional): number of colors to quantize the image to. 
+        palettesize (int, optional): number of colors to quantize the image to.
             rounded to the nearest power of two. defaults to 16.
         subrectangles (bool, optional): try and optimize the GIF by storing only the rectangular
             parts of each frame that change with respect to the previous. defaults to True.
@@ -172,6 +182,7 @@ def game_to_gif(
     fps: Optional[float] = 1.0,
     palettesize: int = 16,
     subrectangles: bool = True,
+    processes: int = 1,
 ) -> Optional[TemporaryFile]:
     """Generate gif of chess game from pgn
 
@@ -190,9 +201,10 @@ def game_to_gif(
         palettesize (int, optional): number of colors to quantize image to. defaults to 16.
         subrectangles (bool, optional): try and optimize gif by storing only the rectangular
             parts of each frame that change with respect to the previous. defaults to True.
+        processes (int, optional): number of processes when converting svgs to pngs. defaults to 1.
 
     Returns:
-        Optional[TemporaryFile]: gif in temporary file 
+        Optional[TemporaryFile]: gif in temporary file
     """
     boards_and_last_moves = game_to_boards_and_last_moves(game, add_initial_position)
     svgs = (
@@ -206,7 +218,13 @@ def game_to_gif(
         )
         for board, last_move in boards_and_last_moves
     )
-    pngs = (svg_to_png(svg) for svg in svgs)
+
+    if processes > 1:
+        with Pool(processes=processes) as p:
+            pngs = p.map(svg_to_png, svgs)
+    else:
+        pngs = (svg_to_png(svg) for svg in svgs)
+
     gif_temp_file = pngs_to_gif(
         pngs,
         loop,
@@ -215,7 +233,7 @@ def game_to_gif(
         palettesize,
         subrectangles,
     )
-    
+
     if gif_path is not None:
         save_gif_temp_file(gif_temp_file, gif_path)
     else:
@@ -236,6 +254,7 @@ def pgn_to_gif(
     fps: Optional[float] = 1.0,
     palettesize: int = 16,
     subrectangles: bool = True,
+    processes: int = 1,
 ) -> Optional[TemporaryFile]:
     """Generate gif of chess game
 
@@ -254,9 +273,10 @@ def pgn_to_gif(
         palettesize (int, optional): number of colors to quantize image to. defaults to 16.
         subrectangles (bool, optional): try and optimize gif by storing only the rectangular
             parts of each frame that change with respect to the previous. defaults to True.
+        processes (int, optional): number of processes when converting svgs to pngs. defaults to 1.
 
     Returns:
-        Optional[TemporaryFile]: gif in temporary file 
+        Optional[TemporaryFile]: gif in temporary file
     """
     game = pgn_to_game(pgn)
     return game_to_gif(
@@ -273,4 +293,5 @@ def pgn_to_gif(
         fps,
         palettesize,
         subrectangles,
+        processes,
     )

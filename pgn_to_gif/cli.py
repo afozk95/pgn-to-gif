@@ -1,7 +1,7 @@
 from typing import Literal, Optional, Sequence
 import argparse
 from pathlib import Path
-from .utils import read_css, read_pgn, pgn_to_gif
+from utils import read_css, read_pgn, pgn_to_gif
 import chess
 
 
@@ -26,20 +26,99 @@ def parse_bool(bool_str: Literal["1", "t", "true", "0", "f", "false"]) -> bool:
 
 
 def main(argv: Optional[Sequence[str]] = None) -> None:
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--pgn-path", dest="pgn_path", required=True, type=Path, help="path to pgn file to read")
-    parser.add_argument("--gif-path", dest="gif_path", required=True, type=Path, help="path to gif file to save")
-    parser.add_argument("--add-initial-position", dest="add_initial_position", default="true", choices=["1", "t", "true", "0", "f", "false"], help="add initial position to gif")
-    parser.add_argument("--highlight-last-move", dest="highlight_last_move", default="true", choices=["1", "t", "true", "0", "f", "false"], help="highlight last move on board")
-    parser.add_argument("--orientation", dest="orientation", default="white", choices=["white", "black"], help="orientation of board")
-    parser.add_argument("--size", dest="size", default=400, type=int, help="size of board")
-    parser.add_argument("--coordinates", dest="coordinates", default="true", choices=["1", "t", "true", "0", "f", "false"], help="add board coordinates")
-    parser.add_argument("--css-path", dest="css_path", default=None, type=Path, help="path to css file to style board")
-    parser.add_argument("--loop", dest="loop", default=0, type=int, help="number of loops for gif, 0 means infinite")
-    parser.add_argument("--duration", dest="duration", default=1.0, type=float, help="duration of each frame (in seconds) in gif")
-    parser.add_argument("--fps", dest="fps", default=1.0, type=float, help="frame per second of gif")
-    parser.add_argument("--palettesize", dest="palettesize", default=64, type=int, help="number of colors to quantize images to")
-    parser.add_argument("--subrectangles", dest="subrectangles", default="true", choices=["1", "t", "true", "0", "f", "false"], help="optimize gif by storing change")
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument(
+        "--pgn-path",
+        dest="pgn_path",
+        required=True,
+        type=Path,
+        help="path to pgn file to read",
+    )
+    parser.add_argument(
+        "--gif-path",
+        dest="gif_path",
+        required=True,
+        type=Path,
+        help="path to gif file to save",
+    )
+    parser.add_argument(
+        "--add-initial-position",
+        dest="add_initial_position",
+        default="true",
+        choices=["1", "t", "true", "0", "f", "false"],
+        help="add initial position to gif",
+    )
+    parser.add_argument(
+        "--highlight-last-move",
+        dest="highlight_last_move",
+        default="true",
+        choices=["1", "t", "true", "0", "f", "false"],
+        help="highlight last move on board",
+    )
+    parser.add_argument(
+        "--orientation",
+        dest="orientation",
+        default="white",
+        choices=["white", "black"],
+        help="orientation of board",
+    )
+    parser.add_argument(
+        "--size", dest="size", default=400, type=int, help="size of board"
+    )
+    parser.add_argument(
+        "--coordinates",
+        dest="coordinates",
+        default="true",
+        choices=["1", "t", "true", "0", "f", "false"],
+        help="add board coordinates",
+    )
+    parser.add_argument(
+        "--css-path",
+        dest="css_path",
+        default=None,
+        type=Path,
+        help="path to css file to style board",
+    )
+    parser.add_argument(
+        "--loop",
+        dest="loop",
+        default=0,
+        type=int,
+        help="number of loops for gif, 0 means infinite",
+    )
+    parser.add_argument(
+        "--duration",
+        dest="duration",
+        default=1.0,
+        type=float,
+        help="duration of each frame (in seconds) in gif",
+    )
+    parser.add_argument(
+        "--fps", dest="fps", default=1.0, type=float, help="frame per second of gif"
+    )
+    parser.add_argument(
+        "--palettesize",
+        dest="palettesize",
+        default=64,
+        type=int,
+        help="number of colors to quantize images to",
+    )
+    parser.add_argument(
+        "--subrectangles",
+        dest="subrectangles",
+        default="true",
+        choices=["1", "t", "true", "0", "f", "false"],
+        help="optimize gif by storing change",
+    )
+    parser.add_argument(
+        "--processes",
+        dest="processes",
+        default=1,
+        type=int,
+        help="number of processes when converting svgs to pngs",
+    )
 
     args = parser.parse_args(argv)
 
@@ -64,6 +143,7 @@ def main(argv: Optional[Sequence[str]] = None) -> None:
         args.fps,
         args.palettesize,
         subrectangles,
+        args.processes
     )
 
 

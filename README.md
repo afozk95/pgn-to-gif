@@ -6,8 +6,9 @@ Generate GIFs of chess games from PGN files.
 
 ## Usage
 ```
-usage: pgn-to-gif [-h] --pgn-path PGN_PATH --gif-path GIF_PATH [--add-initial-position {1,t,true,0,f,false}] [--highlight-last-move {1,t,true,0,f,false}] [--orientation {white,black}] [--size SIZE]
-                  [--coordinates {1,t,true,0,f,false}] [--css-path CSS_PATH] [--loop LOOP] [--duration DURATION] [--fps FPS] [--palettesize PALETTESIZE] [--subrectangles {1,t,true,0,f,false}]
+usage: pgn-to-gif [-h] --pgn-path PGN_PATH --gif-path GIF_PATH [--add-initial-position {1,t,true,0,f,false}] [--highlight-last-move {1,t,true,0,f,false}] [--orientation {white,black}]
+              [--size SIZE] [--coordinates {1,t,true,0,f,false}] [--css-path CSS_PATH] [--loop LOOP] [--duration DURATION] [--fps FPS] [--palettesize PALETTESIZE]
+              [--subrectangles {1,t,true,0,f,false}] [--processes PROCESSES]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -30,6 +31,8 @@ optional arguments:
                         number of colors to quantize images to (default: 64)
   --subrectangles {1,t,true,0,f,false}
                         optimize gif by storing change (default: true)
+  --processes PROCESSES
+                        number of processes when converting svgs to pngs (default: 1)
 ```
 
 ## Examples
