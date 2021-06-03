@@ -7,7 +7,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="pgn_to_gif",
-    version="0.0.2",
+    version="0.0.3",
     description="Generate GIFs of chess games from PGN files.",
     long_description=long_description,
     long_description_content_type="text/markdown",
